@@ -1,8 +1,8 @@
 <template>
-<div id="app">
-    <el-container>
+  <div id="app">
+    <el-container v-if="isShow">
       <!--侧边栏容器-->
-      <el-aside width="200px">
+      <el-aside>
         <Navigation/>
       </el-aside>
       <el-container>
@@ -12,61 +12,58 @@
         </el-header>
         <!--内容栏容器-->
         <el-main>
-          <p>This is main area.</p>
-          <p>
-            Loading
-            <i class="el-icon-loading"></i>
-          </p>
-          <img src="./assets/logo.png">
-          <router-view/>
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
+    <router-view v-else-if="!isShow"></router-view>
   </div>
 </template>
 
 <script>
-import Navigation from '@/components/Navigation'
-import Header from '@/components/Header'
-
+import Navigation from "@/components/Navigation";
+import Header from "@/components/Header";
 export default {
-  name: 'App',
-	components: {
+  name: "App",
+  components: {
     Navigation,
     Header
+  },
+  computed: {
+    //  不能使用箭头函数！
+    //  But Why?
+    // isShow: () => store.state.isLogined
+    isShow() {
+      return this.$store.getters.getIsLogined
+    }
   }
-}
+};
 </script>
 
 <style>
-body{
+body {
+  background-color: #e9e9e9;
+  /* background-color: #D3DCE6; */
   margin: 0;
   padding: 0;
 }
+a {
+  text-decoration: none;
+}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   /* margin-top: 60px; */
 }
 .el-aside {
   /* background-color: #D3DCE6; */
-  color: #333;
-  text-align: center;
-  line-height: 200px;
+  background-color: #ffffff;
 }
-.el-header {
-  /* background-color: #B3C0D1; */
-  color: #333;
-  /* line-height: 60px; */
-}
-  
-.el-main {
-  /* background-color: #E9EEF3; */
-  color: #333;
-  text-align: center;
-  /* line-height: 160px; */
+
+.box-card {
+  margin: 20px 0;
 }
 </style>
+
